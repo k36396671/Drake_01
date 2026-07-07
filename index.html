@@ -103,6 +103,19 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
+            /* 🛸 加上水平 3D 翻轉動畫效果 */
+            animation: logo-3d-flip 6s linear infinite;
+            transition: animation-duration 0.3s ease;
+        }
+
+        /* 滑鼠懸停時加速 */
+        .fleet-logo-img:hover {
+            animation-duration: 2s;
+        }
+
+        @keyframes logo-3d-flip {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
         }
 
         .fleet-title h1 {
@@ -300,13 +313,13 @@
                     <p>歡迎來到<strong>極霸艦隊 (GB)</strong> 的中央核心網絡。我們是一群遊走在法律邊緣、手握巨額財富、崇尚極致自由的深空掠奪者與開拓先鋒。</p>
                     
                     <div class="highlight-box">
-                        <strong style="color: var(--fleet-gold);">隊徽精神：</strong><br>
-                        頂部巨大的 <span style="color: var(--fleet-gold); font-weight:bold;">GB</span> 代表著我們不滅的代號，右側閃耀的 <span style="color: var(--fleet-pink); font-weight:bold;">$</span> 符號則是不斷警惕我們——星辰大海的終點永遠是無盡的資源與掠奪。
+                        <strong style="color: var(--fleet-gold);">解構隊徽精神：</strong><br>
+                        頂部巨大的 <span style="color: var(--fleet-gold); font-weight:bold;">GB</span> 代表著我們不滅的代號，而右側閃耀的 <span style="color: var(--fleet-pink); font-weight:bold;">$</span> 符號則是不斷警惕我們——星辰大海的終點永遠是無盡的資源與掠奪。
                     </div>
 
                     <p>隊徽中解構單眼罩的粉紅意志與赤紅鋼盔，外表玩世不恭，內心冷酷剽悍。兩側展開的雙翼與金色軌道，將承載著我們衝破每一道封鎖線。</p>
 
-                    <p>測試 AKA 新訓教官 S6 最愛白獅</p>
+                    <p>測試: 新訓教官 AKA S6 最愛白獅</p>
                     
                     <h3 style="color: var(--fleet-gold); margin-top: 25px; font-family: 'Orbitron'; font-size: 1.1rem;">核心活動區域</h3>
                     <ul class="feature-list">
@@ -319,7 +332,7 @@
 
             <div class="scifi-panel" id="formPanel">
                 <div class="panel-header">
-                    <span>提交飛行申請信號 // REGISTER PROTOCOL</span>
+                    <span>提交申請信號 // REGISTER PROTOCOL</span>
                     <span class="badge-element" id="panelTag" style="color: var(--fleet-gold); border-color: var(--fleet-gold);">STATIC TERMINAL</span>
                 </div>
                 
