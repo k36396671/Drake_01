@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星際公民：深空拓荒者紀錄</title>
+    <style>
+        /* 網站整體視覺風格設定 */
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #161b22;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #58a6ff;
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            color: #58a6ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 2.5rem;
+        }
+        header p {
+            color: #8b949e;
+            font-style: italic;
+        }
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        section {
+            margin-bottom: 40px;
+            background-color: #161b22;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border: 1px solid #30363d;
+        }
+        h2 {
+            color: #f0f6fc;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: "▶";
+            color: #58a6ff;
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        .highlight {
+            color: #ff7b72;
+            font-weight: bold;
+        }
+        .card-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background-color: #21262d;
+            padding: 20px;
+            border-left: 4px solid #ff7b72;
+            border-radius: 4px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #ff7b72;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #010409;
+            color: #484f58;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Star Citizen 拓荒者終端</h1>
+        <p>「在無垠的宇宙中，數據就是生存的本錢。」</p>
+    </header>
+
+    <main>
+        <!-- 資源追蹤區塊 -->
+        <section>
+            <h2>Pyro 星系資源採集清單</h2>
+            <p>紀錄在危險的 Pyro 星系中，重點農資源的收集進度與價值評估：</p>
+            <ul>
+                <li><span class="highlight">定位版 (Targeting Boards)</span>：高價值電子零件，建議在廢棄空間站周邊搜尋。</li>
+                <li><span class="highlight">驅動器 (Drives)</span>：飛船維護與改裝的核心組件，黑市需求量大。</li>
+                <li><span class="highlight">未加工礦石</span>：需留意海盜伏擊，建議組隊前往開採。</li>
+            </ul>
+        </section>
+
+        <!-- 組件評測區塊 -->
+        <section>
+            <h2>飛船組件分析與改裝策略</h2>
+            <p>針對不同任務需求，選擇最合適的飛船升級方案。</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <h3>軍用 A 級 量子引擎</h3>
+                    <p><strong>優勢：</strong> 擁有極致的啟動時間與爆發速度。</p>
+                    <p><strong>劣勢：</strong> 油耗極其驚人。</p>
+                    <p><strong>適用場景：</strong> 適合快速打擊、短途高風險任務與緊急撤離。</p>
+                </div>
+                <div class="card">
+                    <h3>工業 A 級 量子引擎</h3>
+                    <p><strong>優勢：</strong> 耐久度極佳，且燃油效率非常高。</p>
+                    <p><strong>劣勢：</strong> 飛行速度相對緩慢。</p>
+                    <p><strong>適用場景：</strong> 適合跨星系的長途跋涉與重型貨運任務。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        SEE YOU IN THE VERSE
+    </footer>
+
+</body>
+</html>
