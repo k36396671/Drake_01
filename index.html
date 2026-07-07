@@ -3,143 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星際公民：深空拓荒者紀錄</title>
+    <title>Star Citizen | 拓荒者終端機 (Drake Interplanetary)</title>
     <style>
-        /* 網站整體視覺風格設定 */
+        :root {
+            --drake-red: #ff3333;
+            --drake-dark: #0a0a0c;
+            --drake-panel: #141518;
+            --text-main: #e0e0e0;
+            --text-muted: #666666;
+            --border-color: #333333;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
         body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--drake-dark);
+            color: var(--text-main);
+            font-family: 'Share Tech Mono', monospace, sans-serif;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(20, 21, 24, 0.8) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(20, 21, 24, 0.8) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
-        header {
-            background-color: #161b22;
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 3px solid #58a6ff;
-            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);
+
+        /* Scanline effect */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
         }
-        header h1 {
-            margin: 0;
-            color: #58a6ff;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 2.5rem;
-        }
-        header p {
-            color: #8b949e;
-            font-style: italic;
-        }
-        main {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        section {
-            margin-bottom: 40px;
-            background-color: #161b22;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            border: 1px solid #30363d;
-        }
-        h2 {
-            color: #f0f6fc;
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 10px;
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-        }
-        h2::before {
-            content: "▶";
-            color: #58a6ff;
-            margin-right: 10px;
-            font-size: 0.8em;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        li {
-            margin-bottom: 12px;
-        }
-        .highlight {
-            color: #ff7b72;
-            font-weight: bold;
-        }
-        .card-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .card {
-            background-color: #21262d;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
-            border-left: 4px solid #ff7b72;
-            border-radius: 4px;
-            flex: 1;
-            min-width: 250px;
+            position: relative;
+            z-index: 10;
         }
-        .card h3 {
-            margin-top: 0;
-            color: #ff7b72;
+
+        header {
+            border-bottom: 2px solid var(--drake-red);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            text-transform: uppercase;
         }
-        footer {
-            text-align: center;
-            padding: 30px;
-            background-color: #010409;
-            color: #484f58;
-            font-weight: bold;
+
+        .logo-area h1 {
+            color: var(--drake-red);
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
             letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+        }
+
+        .logo-area p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .system-status {
+            text-align: right;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--drake-red);
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 8px var(--drake-red);
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media(max-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background-color: var(--drake-panel);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            position: relative;
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            border-top: 2px solid var(--drake-red);
+            border-left: 2px solid var(--drake-red);
+        }
+        
+        .panel::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            border-bottom: 2px solid var(--drake-red);
+            border-right: 2px solid var(--drake-red);
+        }
+
+        .panel-header {
+            color: var(--drake-red);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #222;
+        }
+
+        th {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        td {
+            font-size: 1rem;
+        }
+
+        .highlight {
+            color: var(--drake-red);
+        }
+
+        .btn {
+            background: transparent;
+            color: var(--drake-red);
+            border: 1px solid var(--drake-red);
+            padding: 10px 20px;
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--drake-red);
+            color: #000;
+        }
+        
+        /* 解決方案警告框 */
+        .alert-box {
+            background: rgba(255, 51, 51, 0.1);
+            border: 1px solid var(--drake-red);
+            padding: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--drake-red);
+        }
+        .alert-box h3 { margin-top: 0; color: var(--drake-red); }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Star Citizen 拓荒者終端</h1>
-        <p>「在無垠的宇宙中，數據就是生存的本錢。」</p>
-    </header>
+    <div class="container">
+        <!-- 解決方案提示區塊 (正式上線可刪除此段) -->
+        <div class="alert-box">
+            <h3>[系統覆寫成功] GitHub Pages 部署失敗修復完成</h3>
+            <p>拓荒者，你之前的 <code>build (dynamic)</code> 錯誤是因為 GitHub 的 Jekyll 引擎試圖編譯網頁而失敗。我們現在已經透過上傳 <code>.nojekyll</code> 檔案來封鎖它的干擾，強制讓 GitHub 直接發布這個靜態終端機介面。系統連線現已穩定。</p>
+        </div>
 
-    <main>
-        <!-- 資源追蹤區塊 -->
-        <section>
-            <h2>Pyro 星系資源採集清單</h2>
-            <p>紀錄在危險的 Pyro 星系中，重點農資源的收集進度與價值評估：</p>
-            <ul>
-                <li><span class="highlight">定位版 (Targeting Boards)</span>：高價值電子零件，建議在廢棄空間站周邊搜尋。</li>
-                <li><span class="highlight">驅動器 (Drives)</span>：飛船維護與改裝的核心組件，黑市需求量大。</li>
-                <li><span class="highlight">未加工礦石</span>：需留意海盜伏擊，建議組隊前往開採。</li>
-            </ul>
-        </section>
+        <header>
+            <div class="logo-area">
+                <h1>DRAKE INTERPLANETARY</h1>
+                <p>個人任務終端 v3.4.1 // UEE 授權網路</p>
+            </div>
+            <div class="system-status">
+                <div style="margin-bottom: 5px;"><span class="status-indicator"></span> 網路連線: <span style="color: #4caf50;">穩定</span></div>
+                <div style="color: var(--text-muted);" id="clock">UEE 標準時間: 載入中...</div>
+            </div>
+        </header>
 
-        <!-- 組件評測區塊 -->
-        <section>
-            <h2>飛船組件分析與改裝策略</h2>
-            <p>針對不同任務需求，選擇最合適的飛船升級方案。</p>
-            
-            <div class="card-container">
-                <div class="card">
-                    <h3>軍用 A 級 量子引擎</h3>
-                    <p><strong>優勢：</strong> 擁有極致的啟動時間與爆發速度。</p>
-                    <p><strong>劣勢：</strong> 油耗極其驚人。</p>
-                    <p><strong>適用場景：</strong> 適合快速打擊、短途高風險任務與緊急撤離。</p>
+        <div class="grid-layout">
+            <!-- 左側：機隊狀態 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span>機隊狀態矩陣 (Fleet Matrix)</span>
+                    <span>[機庫 A-04]</span>
                 </div>
-                <div class="card">
-                    <h3>工業 A 級 量子引擎</h3>
-                    <p><strong>優勢：</strong> 耐久度極佳，且燃油效率非常高。</p>
-                    <p><strong>劣勢：</strong> 飛行速度相對緩慢。</p>
-                    <p><strong>適用場景：</strong> 適合跨星系的長途跋涉與重型貨運任務。</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>型號 (Model)</th>
+                            <th>定位 (Role)</th>
+                            <th>狀態 (Status)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Drake Cutlass Black</td>
+                            <td>多用途/掠奪</td>
+                            <td class="highlight">整備完成</td>
+                        </tr>
+                        <tr>
+                            <td>Drake Corsair</td>
+                            <td>深空探索</td>
+                            <td style="color: #ff9800;">維修中 (43%)</td>
+                        </tr>
+                        <tr>
+                            <td>Drake Vulture</td>
+                            <td>輕型打撈</td>
+                            <td class="highlight">部署中 (Pyro星系)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 右側：Pyro星系高價值目標 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span>Pyro 星系情報 (Bounty & Cargo)</span>
+                    <span>[機密]</span>
+                </div>
+                <p style="color: #aaa; margin-top: 0;">目前區域風險評估：<span class="highlight">極高 (無UEE保護)</span></p>
+                <ul>
+                    <li style="margin-bottom: 15px;">
+                        <strong class="highlight">打撈目標：</strong> 廢棄的 Aegis Hammerhead
+                        <br><span style="color: var(--text-muted); font-size: 0.9em;">坐標: Pyro III 軌道碎片帶。預估RMC價值: 450,000 aUEC</span>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong class="highlight">貨物收購：</strong> 違禁品 (SLAM)
+                        <br><span style="color: var(--text-muted); font-size: 0.9em;">收貨點: Ruin Station 黑市。注意海盜埋伏。</span>
+                    </li>
+                    <li>
+                        <strong class="highlight">通緝目標：</strong> "九尾" 小隊長
+                        <br><span style="color: var(--text-muted); font-size: 0.9em;">賞金: 65,000 aUEC。建議武裝: 至少兩門S4雷射砲。</span>
+                    </li>
+                </ul>
+                <div style="text-align: right; margin-top: 20px;">
+                    <button class="btn">下載座標資料</button>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
 
-    <footer>
-        SEE YOU IN THE VERSE
-    </footer>
+        <footer>
+            // WARNING: UNAUTHORIZED ACCESS WILL BE REPORTED TO UEE ADVOCACY // <br>
+            // SEE YOU IN THE VERSE //
+        </footer>
+    </div>
 
+    <script>
+        // 模擬星際公民的標準時間
+        function updateClock() {
+            const now = new Date();
+            const year = now.getFullYear() + 930; // 星際公民年份大約是現在+930年 (2954年)
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+            document.getElementById('clock').innerText = `UEE 標準時間: ${year}.${now.getUTCMonth()+1}.${now.getUTCDate()} ${hours}:${minutes}:${seconds} SET`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
