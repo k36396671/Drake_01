@@ -3,311 +3,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Star Citizen | 拓荒者終端機 (Drake Interplanetary)</title>
+    <title>【招募終端】星際公民 - 星海拓荒者艦隊 (Star Voyagers Fleet)</title>
     <style>
         :root {
-            --drake-red: #ff3333;
-            --drake-dark: #0a0a0c;
-            --drake-panel: #141518;
-            --text-main: #e0e0e0;
-            --text-muted: #666666;
-            --border-color: #333333;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #0072ff;
+            --bg-dark: #060b14;
+            --panel-bg: rgba(10, 25, 47, 0.7);
+            --text-light: #e2e8f0;
+            --text-muted: #8892b0;
+            --border-color: rgba(0, 242, 254, 0.2);
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
         body {
-            background-color: var(--drake-dark);
-            color: var(--text-main);
-            font-family: 'Share Tech Mono', monospace, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
+            /* 星空背景與動態科技網格疊加 */
             background-image: 
-                linear-gradient(rgba(20, 21, 24, 0.8) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(20, 21, 24, 0.8) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-
-        /* Scanline effect */
-        body::after {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 2;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+            background-size: 550px 550px, 350px 350px, 30px 30px, 30px 30px;
+            background-position: 0 0, 40px 60px, 0 0, 0 0;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 10;
+            padding: 40px 20px;
         }
 
+        /* 頂部橫幅 */
         header {
-            border-bottom: 2px solid var(--drake-red);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, rgba(0,114,255,0.1) 0%, rgba(6,11,20,0) 100%);
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .hud-tag {
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            letter-spacing: 4px;
             text-transform: uppercase;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            background: rgba(0, 242, 254, 0.05);
         }
 
-        .logo-area h1 {
-            color: var(--drake-red);
-            font-size: 2.5rem;
-            margin: 0 0 10px 0;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+        h1 {
+            font-size: 3rem;
+            margin: 10px 0;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
         }
 
-        .logo-area p {
-            margin: 0;
+        header p {
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 15px auto 0 auto;
+            line-height: 1.6;
         }
 
-        .system-status {
-            text-align: right;
+        /* 區塊通用樣式 */
+        section {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            border-left: 4px solid var(--accent-cyan);
+            padding-left: 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 互動式分頁區塊 (Tabs) */
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 表格與卡片設計 */
+        .division-info {
+            line-height: 1.7;
         }
         
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background-color: var(--drake-red);
-            border-radius: 50%;
-            margin-right: 8px;
-            box-shadow: 0 0 8px var(--drake-red);
-            animation: blink 2s infinite;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 4px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+            background: rgba(0, 114, 255, 0.05);
+        }
+
+        .feature-card h3 {
+            color: #fff;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        /* 互動式招募報名表單 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            background: rgba(6, 11, 20, 0.8);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            color: #fff;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-cyan));
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+            filter: brightness(1.1);
+        }
+
+        /* 終端機模擬回應彈窗 */
+        #terminal-response {
+            display: none;
+            background: #02060c;
+            border: 1px solid #4caf50;
+            color: #4caf50;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
+        }
+
+        .typing-effect {
+            border-right: 2px solid #4caf50;
+            white-space: pre-wrap;
+            animation: blink 0.75s step-end infinite;
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+            from, to { border-color: transparent }
+            50% { border-color: #4caf50; }
         }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        @media(max-width: 768px) {
-            .grid-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .panel {
-            background-color: var(--drake-panel);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            position: relative;
-        }
-
-        .panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 30px;
-            height: 30px;
-            border-top: 2px solid var(--drake-red);
-            border-left: 2px solid var(--drake-red);
-        }
-        
-        .panel::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 30px;
-            height: 30px;
-            border-bottom: 2px solid var(--drake-red);
-            border-right: 2px solid var(--drake-red);
-        }
-
-        .panel-header {
-            color: var(--drake-red);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #222;
-        }
-
-        th {
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        td {
-            font-size: 1rem;
-        }
-
-        .highlight {
-            color: var(--drake-red);
-        }
-
-        .btn {
-            background: transparent;
-            color: var(--drake-red);
-            border: 1px solid var(--drake-red);
-            padding: 10px 20px;
-            font-family: inherit;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background: var(--drake-red);
-            color: #000;
-        }
-        
-        /* 解決方案警告框 */
-        .alert-box {
-            background: rgba(255, 51, 51, 0.1);
-            border: 1px solid var(--drake-red);
-            padding: 15px;
-            margin-bottom: 30px;
-            border-left: 5px solid var(--drake-red);
-        }
-        .alert-box h3 { margin-top: 0; color: var(--drake-red); }
 
         footer {
-            margin-top: 50px;
             text-align: center;
+            padding: 40px 20px;
             color: var(--text-muted);
-            font-size: 0.8rem;
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- 解決方案提示區塊 (正式上線可刪除此段) -->
-        <div class="alert-box">
-            <h3>[系統覆寫成功] GitHub Pages 部署失敗修復完成</h3>
-            <p>拓荒者，你之前的 <code>build (dynamic)</code> 錯誤是因為 GitHub 的 Jekyll 引擎試圖編譯網頁而失敗。我們現在已經透過上傳 <code>.nojekyll</code> 檔案來封鎖它的干擾，強制讓 GitHub 直接發布這個靜態終端機介面。系統連線現已穩定。</p>
-        </div>
-
+        
+        <!-- 頂部橫幅 -->
         <header>
-            <div class="logo-area">
-                <h1>DRAKE INTERPLANETARY</h1>
-                <p>個人任務終端 v3.4.1 // UEE 授權網路</p>
-            </div>
-            <div class="system-status">
-                <div style="margin-bottom: 5px;"><span class="status-indicator"></span> 網路連線: <span style="color: #4caf50;">穩定</span></div>
-                <div style="color: var(--text-muted);" id="clock">UEE 標準時間: 載入中...</div>
-            </div>
+            <div class="hud-tag">UEE Registered Org // 招募代號: VOYAGER</div>
+            <h1>星海拓荒者艦隊招募終端</h1>
+            <p>「看夠了安全區域的安穩？Pyro與無垠深空正等待著真正的勇者。加入我們，一起在群星間留下足跡！」</p>
         </header>
 
-        <div class="grid-layout">
-            <!-- 左側：機隊狀態 -->
-            <div class="panel">
-                <div class="panel-header">
-                    <span>機隊狀態矩陣 (Fleet Matrix)</span>
-                    <span>[機庫 A-04]</span>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>型號 (Model)</th>
-                            <th>定位 (Role)</th>
-                            <th>狀態 (Status)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Drake Cutlass Black</td>
-                            <td>多用途/掠奪</td>
-                            <td class="highlight">整備完成</td>
-                        </tr>
-                        <tr>
-                            <td>Drake Corsair</td>
-                            <td>深空探索</td>
-                            <td style="color: #ff9800;">維修中 (43%)</td>
-                        </tr>
-                        <tr>
-                            <td>Drake Vulture</td>
-                            <td>輕型打撈</td>
-                            <td class="highlight">部署中 (Pyro星系)</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- 艦隊簡介 -->
+        <section>
+            <h2>關於我們 // ABOUT US</h2>
+            <p style="line-height: 1.8; color: var(--text-light);">
+                我們是「星海拓荒者 (Star Voyagers)」，一支活躍於 UEE 核心星系與邊境未開發區域的多元化民間組織。無論你是熱衷於高風險戰機狗鬥的王牌飛行員、沉迷於挖掘巨額財富的工業礦工，還是喜歡開著探險船尋找宇宙第一道光的孤獨行者，在我們的船艙裡，永遠有屬於你的戰位。
+            </p>
+        </section>
+
+        <!-- 互動分頁：軍團部門 -->
+        <section>
+            <h2>選擇你的星際生涯 // DIVISIONS</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">點擊下方按鈕切換檢視不同的艦隊核心部門工作環境：</p>
+            
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('combat')">戰鬥先鋒部</button>
+                <button class="tab-btn" onclick="switchTab('industry')">工業採礦部</button>
+                <button class="tab-btn" onclick="switchTab('exploration')">深空探索部</button>
             </div>
 
-            <!-- 右側：Pyro星系高價值目標 -->
-            <div class="panel">
-                <div class="panel-header">
-                    <span>Pyro 星系情報 (Bounty & Cargo)</span>
-                    <span>[機密]</span>
-                </div>
-                <p style="color: #aaa; margin-top: 0;">目前區域風險評估：<span class="highlight">極高 (無UEE保護)</span></p>
-                <ul>
-                    <li style="margin-bottom: 15px;">
-                        <strong class="highlight">打撈目標：</strong> 廢棄的 Aegis Hammerhead
-                        <br><span style="color: var(--text-muted); font-size: 0.9em;">坐標: Pyro III 軌道碎片帶。預估RMC價值: 450,000 aUEC</span>
-                    </li>
-                    <li style="margin-bottom: 15px;">
-                        <strong class="highlight">貨物收購：</strong> 違禁品 (SLAM)
-                        <br><span style="color: var(--text-muted); font-size: 0.9em;">收貨點: Ruin Station 黑市。注意海盜埋伏。</span>
-                    </li>
-                    <li>
-                        <strong class="highlight">通緝目標：</strong> "九尾" 小隊長
-                        <br><span style="color: var(--text-muted); font-size: 0.9em;">賞金: 65,000 aUEC。建議武裝: 至少兩門S4雷射砲。</span>
-                    </li>
-                </ul>
-                <div style="text-align: right; margin-top: 20px;">
-                    <button class="btn">下載座標資料</button>
+            <!-- 分頁內容 1 -->
+            <div id="combat" class="tab-content active">
+                <div class="division-info">
+                    <p><strong>【職責描述】</strong> 負責護航公會大型貨船、清理犯罪威脅、參與地盾攻防戰與 Pyro 星系爭奪戰。</p>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h3>⚡ 重型突擊小隊</h3>
+                            <p>操作錘頭鯊 (Hammerhead)、至高 (Redeemer) 等多砲塔砲艇，進行正面火力壓制。</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>✈️ 戰機護航編隊</h3>
+                            <p>駕駛軍刀 (Sabre)、箭式 (Arrow) 或輕騎兵進行靈活攔截與機動狗鬥。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <footer>
-            // WARNING: UNAUTHORIZED ACCESS WILL BE REPORTED TO UEE ADVOCACY // <br>
-            // SEE YOU IN THE VERSE //
-        </footer>
+            <!-- 分頁內容 2 -->
+            <div id="industry" class="tab-content">
+                <div class="division-info">
+                    <p><strong>【職責描述】</strong> 艦隊的經濟命脈。操作大型工業船隻，開採高價值量化礦石、進行廢船全船資源打撈與精煉貿易。</p>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h3>💎 礦業開採聯隊</h3>
+                            <p>獵戶座 (Orion)、雙子座 (Mole) 多人合作採礦，精準定位高純度量化礦脈。</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🔧 資源回收小組</h3>
+                            <p>使用禿鷹 (Vulture) 或再回收號 (Reclaimer) 拆解星際殘骸，變廢為寶。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分頁內容 3 -->
+            <div id="exploration" class="tab-content">
+                <div class="division-info">
+                    <p><strong>【職責描述】</strong> 航向地圖的盡頭。負責跳躍點探測、新資源點標記、未知星球表面遺跡搜索與遠程科研偵查。</p>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h3>🌌 先鋒偵察隊</h3>
+                            <p>駕駛水星 (MSR) 或卡拉克 (Carrack) 穿越未知的跳躍點，帶回第一手宇宙星圖。</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🗺️ 地表地質探勘</h3>
+                            <p>投放地表載具，對未知星球進行詳細的生態與環境數據採集。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 招募要求與福利 -->
+        <section>
+            <h2>艦隊規範與保障 // TERMS & BENEFITS</h2>
+            <div class="feature-grid">
+                <div class="feature-card" style="border-left: 3px solid #4caf50;">
+                    <h3 style="color: #4caf50;">🎁 我們的福利</h3>
+                    <ul style="padding-left: 20px; margin: 0; color: #cbd5e1;">
+                        <li>新兵享有一對一資深教官飛行/採礦實戰指導。</li>
+                        <li>公會定期發放高額出勤補貼 (aUEC) 及免費精煉燃油贊助。</li>
+                        <li>大型多人旗艦 (如克拉克、再回收號) 戰位輪編，體驗團戰樂趣。</li>
+                    </ul>
+                </div>
+                <div class="feature-card" style="border-left: 3px solid #ff9800;">
+                    <h3 style="color: #ff9800;">⚠️ 招募要求</h3>
+                    <ul style="padding-left: 20px; margin: 0; color: #cbd5e1;">
+                        <li>不限萌新或老玩家，需自備正版遊戲包與 Discord 語音軟體。</li>
+                        <li>嚴禁惡意背叛隊友、不遵守作戰指令或無故攻擊同盟玩家。</li>
+                        <li>保持熱情，友善溝通，勝不驕敗不餒。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 互動報名表單 -->
+        <section>
+            <h2>提交你的飛行申請 // JOIN APPLICATION</h2>
+            <form id="recruitmentForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="pilotName">你的 UEE 呼號 / 遊戲 ID</label>
+                    <input type="text" id="pilotName" placeholder="例如: Chris_Roberts" required>
+                </div>
+                <div class="form-group">
+                    <label for="primaryRole">你希望加入的核心部門</label>
+                    <select id="primaryRole" required>
+                        <option value="">-- 請選擇一個部門 --</option>
+                        <option value="戰鬥先鋒部 (Combat)">戰鬥先鋒部 (追求刺激、護航與狗鬥)</option>
+                        <option value="工業採礦部 (Industry)">工業採礦部 (穩健挖礦、打撈與後勤)</option>
+                        <option value="深空探索部 (Exploration)">深空探索部 (星際漫遊、科研與數據)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mainShip">目前最常駕駛或擁有的主力飛船 (選填)</label>
+                    <input type="text" id="mainShip" placeholder="例如: Cutlass Black / Titan / Carrack">
+                </div>
+                <div class="form-group">
+                    <label for="message">簡單寫下一句話，告訴我們你為什麼想加入群星？</label>
+                    <textarea id="message" rows="3" placeholder="例如：我想跟著大家一起開大船，或者我想當 Pyro 最賺錢的礦工！" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">傳送招募申請信號</button>
+            </form>
+
+            <!-- 模擬終端機 -->
+            <div id="terminal-response">
+                <div class="typing-effect" id="terminal-text"></div>
+            </div>
+        </section>
+
     </div>
 
+    <footer>
+        © 2954 STAR VOYAGERS FLEET. ALL RIGHTS RESERVED BY UEE ADVOCACY PROTOCOL.<br>
+        本網頁為《星際公民》玩家組織招募模擬終端機。
+    </footer>
+
+    <!-- 網頁互動邏輯 JS -->
     <script>
-        // 模擬星際公民的標準時間
-        function updateClock() {
-            const now = new Date();
-            const year = now.getFullYear() + 930; // 星際公民年份大約是現在+930年 (2954年)
-            const hours = String(now.getUTCHours()).padStart(2, '0');
-            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-            document.getElementById('clock').innerText = `UEE 標準時間: ${year}.${now.getUTCMonth()+1}.${now.getUTCDate()} ${hours}:${minutes}:${seconds} SET`;
+        // 1. 分頁切換功能
+        function switchTab(tabId) {
+            // 隱藏所有分頁內容
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 取消所有按鈕的 active 狀態
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // 顯示當前選中的分頁與按鈕狀態
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+
+        // 2. 模擬招募表單送出與終端機動畫
+        function handleFormSubmit(event) {
+            event.preventDefault(); // 防止網頁重整
+            
+            const name = document.getElementById('pilotName').value;
+            const role = document.getElementById('primaryRole').value;
+            const ship = document.getElementById('mainShip').value || "阿靈頓輕型穿梭機 (Default)";
+            
+            const terminal = document.getElementById('terminal-response');
+            const terminalText = document.getElementById('terminal-text');
+            
+            terminal.style.display = 'block';
+            terminalText.innerText = "正在向 UEE 廣播衛星連線...\n";
+            
+            let logs = [
+                "> 連線狀態: 建立加密通道中...",
+                "> 正在讀取拓荒者資料: [ID: " + name + "]",
+                "> 申請目標對接: " + role,
+                "> 登錄主航天器資訊: " + ship,
+                "> 狀態更新: 招募信號發射成功！",
+                "> -----------------------------------------",
+                "> [系統通知] 拓荒者 " + name + "，你的申請已成功存檔於艦隊終端。",
+                "> 我們的審核官將在 24 小時內透過量子通信(Discord)與您聯繫！",
+                "> 歡迎來到星海，SEE YOU IN THE VERSE!"
+            ];
+            
+            let currentLine = 0;
+            terminalText.innerText = "";
+            
+            function printLog() {
+                if (currentLine < logs.length) {
+                    terminalText.linecap = true;
+                    terminalText.innerText += logs[currentLine] + "\n";
+                    currentLine++;
+                    setTimeout(printLog, 400); // 每 0.4 秒打印一行，製造科幻感
+                }
+            }
+            printLog();
+        }
     </script>
 </body>
 </html>
