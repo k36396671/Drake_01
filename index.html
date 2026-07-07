@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【極霸艦隊】銀河邊境招募終端 - GB BUCCANEERS</title>
+    <title>【極霸艦隊】招募終端 - GB BUCCANEERS</title>
     <style>
         :root {
             --fleet-gold: #c6a060;       /* 隊徽金色線條 */
             --fleet-pink: #ff7da2;       /* 隊徽核心粉紅 */
-            --fleet-red: #e63946;        /* 隊徽頭盔赤紅 */
+            --fleet-red: #ff2a2a;        /* 警報/駭客赤紅 */
             --dark-space: #050508;       /* 背景宇宙深黑 */
             --panel-bg: #0c0d14;         /* 面板科技暗藍黑 */
             --text-light: #f5f5f7;       /* 主文字顏色 */
@@ -25,12 +25,41 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            /* 宇宙網格微光背景 */
             background-image: 
                 radial-gradient(circle at 50% 50%, rgba(20, 15, 30, 0.6), var(--dark-space) 80%),
                 linear-gradient(rgba(198, 160, 96, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(198, 160, 96, 0.03) 1px, transparent 1px);
             background-size: 100% 100%, 35px 35px, 35px 35px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* 🔴 紅色警報全螢幕特效背景 */
+        body.emergency-alert {
+            animation: red-flash-bg 1s infinite alternate;
+        }
+
+        @keyframes red-flash-bg {
+            0% { background-color: var(--dark-space); }
+            100% { background-color: #1a0505; }
+        }
+
+        /* 🫨 全螢幕/面板劇烈震動效果 */
+        .screen-shake {
+            animation: shake 0.15s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
 
         .container {
@@ -67,10 +96,6 @@
             background: var(--dark-space);
             box-shadow: 0 0 15px rgba(255, 125, 162, 0.2);
             transition: transform 0.3s ease;
-        }
-
-        .fleet-logo-wrapper:hover {
-            transform: rotate(360deg);
         }
 
         .fleet-logo-img {
@@ -129,7 +154,6 @@
 
         @media (max-width: 900px) {
             .main-layout { grid-template-columns: 1fr; }
-            .terminal-meta { text-align: left; border-left: 2px solid var(--fleet-gold); border-top: none; }
         }
 
         /* 科技感面板樣式 */
@@ -142,7 +166,6 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
 
-        /* 四角科技裝飾線 */
         .scifi-panel::before {
             content: ''; position: absolute; top: -1px; left: -1px; width: 15px; height: 15px;
             border-top: 3px solid var(--fleet-pink); border-left: 3px solid var(--fleet-pink);
@@ -174,11 +197,7 @@
             border: 1px solid rgba(255, 125, 162, 0.3);
         }
 
-        /* 介紹內文 */
-        .intro-text p {
-            line-height: 1.8;
-            color: var(--text-light);
-        }
+        .intro-text p { line-height: 1.8; color: var(--text-light); }
 
         .highlight-box {
             background: rgba(198, 160, 96, 0.05);
@@ -187,81 +206,37 @@
             margin: 20px 0;
         }
 
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .feature-list li::before { content: '★'; color: var(--fleet-pink); }
 
-        .feature-list li {
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .feature-list li::before {
-            content: '★';
-            color: var(--fleet-pink);
-        }
-
-        /* 互動表單元素 */
-        .form-group {
-            margin-bottom: 22px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        /* 表單元素 */
+        .form-group { margin-bottom: 22px; }
+        label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
         input[type="text"], select, textarea {
-            width: 100%;
-            background: rgba(5, 5, 8, 0.8);
-            border: 1px solid #2d3142;
-            padding: 14px;
-            color: var(--text-light);
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            width: 100%; background: rgba(5, 5, 8, 0.8); border: 1px solid #2d3142; padding: 14px;
+            color: var(--text-light); border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 0.95rem; transition: all 0.3s ease;
         }
 
         input[type="text"]:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--fleet-pink);
-            box-shadow: 0 0 10px rgba(255, 125, 162, 0.2);
+            outline: none; border-color: var(--fleet-pink); box-shadow: 0 0 10px rgba(255, 125, 162, 0.2);
         }
 
         .action-button {
             background: linear-gradient(135deg, var(--fleet-gold), #a38048);
-            color: #000;
-            font-family: 'Orbitron', 'Noto Sans TC', sans-serif;
-            font-weight: bold;
-            border: none;
-            padding: 16px 30px;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            cursor: pointer;
-            width: 100%;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+            color: #000; font-family: 'Orbitron', 'Noto Sans TC', sans-serif; font-weight: bold;
+            border: none; padding: 16px 30px; font-size: 1rem; letter-spacing: 2px; cursor: pointer;
+            width: 100%; border-radius: 4px; transition: all 0.3s ease; text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(198, 160, 96, 0.2);
         }
 
         .action-button:hover {
-            background: linear-gradient(135deg, var(--fleet-pink), #e25c83);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 125, 162, 0.4);
+            background: linear-gradient(135deg, var(--fleet-pink), #e25c83); color: #fff;
+            transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 125, 162, 0.4);
         }
 
-        /* 終端機模擬回應視窗 */
+        /* 終端控制台 */
         #console-log {
             display: none;
             background: #020408;
@@ -273,34 +248,33 @@
             border-radius: 4px;
             font-size: 0.9rem;
             box-shadow: 0 0 15px rgba(255, 125, 162, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .log-line {
-            margin: 4px 0;
-            white-space: pre-wrap;
+        /* 🔴 當終端被入侵或失敗時的樣式變化 */
+        #console-log.hacked-style {
+            border-color: var(--fleet-red) !important;
+            color: var(--fleet-red) !important;
+            background: #0d0202 !important;
+            box-shadow: 0 0 25px rgba(255, 42, 42, 0.6) !important;
+            font-weight: bold;
         }
+
+        .log-line { margin: 6px 0; white-space: pre-wrap; }
 
         footer {
-            margin-top: 60px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            padding: 25px;
-            border-top: 1px solid #161925;
-            letter-spacing: 1px;
+            margin-top: 60px; text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 25px; border-top: 1px solid #161925; letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div id="mainContainer" class="container">
         
-        <!-- 抬頭與辨識區 -->
         <header>
             <div class="fleet-branding">
                 <div class="fleet-logo-wrapper">
-                    <!-- 載入指定的隊徽檔案 -->
-                    <img src="123_2.png" alt="極霸艦隊隊徽" class="fleet-logo-img">
+                    <img src="123.png" alt="極霸艦隊隊徽" class="fleet-logo-img">
                 </div>
                 <div class="fleet-title">
                     <h1>極霸艦隊</h1>
@@ -308,15 +282,13 @@
                 </div>
             </div>
             <div class="terminal-meta">
-                <div><span class="status-pulse"></span> 終端狀態: <span style="color: var(--fleet-pink);">正在對接群星</span></div>
+                <div><span class="status-pulse" id="statusDot"></span> 終端狀態: <span id="statusText" style="color: var(--fleet-pink);">正在對接群星</span></div>
                 <div style="color: var(--text-muted); margin-top: 5px;" id="stardate">UEE 標準時間: 載入中...</div>
             </div>
         </header>
 
-        <!-- 主網頁內容網格 -->
         <div class="main-layout">
             
-            <!-- 左側欄：艦隊精神與宣言 -->
             <div class="scifi-panel">
                 <div class="panel-header">
                     <span>艦隊介紹 // FLEET MANIFESTO</span>
@@ -326,13 +298,11 @@
                     <p>歡迎來到<strong>極霸艦隊 (GB)</strong> 的中央核心網絡。我們是一群遊走在法律邊緣、手握巨額財富、崇尚極致自由的深空掠奪者與開拓先鋒。</p>
                     
                     <div class="highlight-box">
-                        <strong style="color: var(--fleet-gold);">隊徽象徵：</strong><br>
+                        <strong style="color: var(--fleet-gold);">解構隊徽精神：</strong><br>
                         頂部巨大的 <span style="color: var(--fleet-gold); font-weight:bold;">GB</span> 代表著我們不滅的代號，而右側閃耀的 <span style="color: var(--fleet-pink); font-weight:bold;">$</span> 符號則是不斷警惕我們——星辰大海的終點永遠是無盡的資源與掠奪。
                     </div>
 
-                    <p>隊徽中佩戴單眼罩的粉紅意志與赤紅鋼盔，象徵著極霸艦隊的核心靈魂：外表玩世不恭，內心冷酷剽悍。兩側展開的雙翼與金色軌道，將承載著我們衝破每一道封鎖線。</p>
-
-                    <p> /測試: 新訓教官 AKA S6 最愛獅白。</p>
+                    <p>隊徽中解構單眼罩的粉紅意志與赤紅鋼盔，外表玩世不恭，內心冷酷剽悍。兩側展開的雙翼與金色軌道，將承載著我們衝破每一道封鎖線。</p>
                     
                     <h3 style="color: var(--fleet-gold); margin-top: 25px; font-family: 'Orbitron'; font-size: 1.1rem;">核心活動區域</h3>
                     <ul class="feature-list">
@@ -343,11 +313,10 @@
                 </div>
             </div>
 
-            <!-- 右側欄：互動報名終端 -->
-            <div class="scifi-panel">
+            <div class="scifi-panel" id="formPanel">
                 <div class="panel-header">
                     <span>提交飛行申請信號 // REGISTER PROTOCOL</span>
-                    <span class="badge-element" style="color: var(--fleet-gold); border-color: var(--fleet-gold);">AUTHENTICATED</span>
+                    <span class="badge-element" id="panelTag" style="color: var(--fleet-gold); border-color: var(--fleet-gold);">STATIC TERMINAL</span>
                 </div>
                 
                 <form id="fleetForm" onsubmit="processApplication(event)">
@@ -360,27 +329,25 @@
                         <label for="fleetRole">預計編入的戰術崗位</label>
                         <select id="fleetRole" required>
                             <option value="">-- 請選擇您的專長 --</option>
-                            <option value="財富狩獵者 [追求 $ 精神]">財富狩獵者 [追求 $ 精神] - 專職物資、貨運與黑市掠奪</option>
-                            <option value="深空開拓先鋒 [金色軌道]">深空開拓先鋒 [金色軌道] - 跳躍點探索與前線火力壓制</option>
-                            <option value="GB 核心捍衛者 [粉紅海盜]">GB 核心捍衛者 [粉紅海盜] - 艦隊主力戰機與戰術防衛</option>
+                            <option value="財富狩獵者 [追求 $ 精神]">財富狩獵者 [追求 $ 精神] - 專職物資貨運</option>
+                            <option value="深空開拓先鋒 [金色軌道]">深空開拓先鋒 [金色軌道] - 跳躍點探索</option>
+                            <option value="GB 核心捍衛者 [粉紅海盜]">GB 核心捍衛者 [粉紅海盜] - 戰術防衛</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="pilotNote">致極霸艦隊的一句話 (選填)</label>
+                        <label for="pilotNote">致極霸艦隊的一句話</label>
                         <textarea id="pilotNote" rows="3" placeholder="讓審核官看看你的海盜靈魂..."></textarea>
                     </div>
 
-                    <button type="submit" class="action-button">發射對接信號 (BROADCAST)</button>
+                    <button type="submit" id="submitBtn" class="action-button">發射對接信號 (BROADCAST)</button>
                 </form>
 
-                <!-- 模擬艦隊控制台回應 -->
                 <div id="console-log"></div>
             </div>
 
         </div>
 
-        <!-- 頁尾 -->
         <footer>
             // SECURE LOG TRANSMISSION PROTOCOL ENFORCED // <br>
             <span style="color: var(--fleet-gold);">© 2956 GB BUCCANEER FLEET. ALL RIGHTS RESERVED. SEE YOU IN THE VERSE.</span>
@@ -388,9 +355,8 @@
 
     </div>
 
-    <!-- 終端互動指令邏輯 -->
     <script>
-        // 自動同步星際宇宙時間 (設定 2026 加上 930 年)
+        // 同步宇宙時間 (2026 + 930年)
         function syncStardate() {
             const date = new Date();
             const year = date.getUTCFullYear() + 930; 
@@ -399,49 +365,88 @@
             const hours = String(date.getUTCHours()).padStart(2, '0');
             const minutes = String(date.getUTCMinutes()).padStart(2, '0');
             const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-            
             document.getElementById('stardate').innerText = `UEE 標準時間: ${year}.${month}.${day} ${hours}:${minutes}:${seconds} SEC`;
         }
         setInterval(syncStardate, 1000);
         syncStardate();
 
-        // 模擬發送申請的網頁動態
+        // 駭客入侵與連線中斷動畫腳本
         function processApplication(e) {
             e.preventDefault();
             
             const id = document.getElementById('pilotId').value;
             const role = document.getElementById('fleetRole').value;
-            const note = document.getElementById('pilotNote').value || "無附加備忘錄";
             
             const consoleBox = document.getElementById('console-log');
-            consoleBox.style.display = 'block';
-            consoleBox.innerHTML = ''; // 清空舊內容
+            const body = document.body;
+            const container = document.getElementById('mainContainer');
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const panelTag = document.getElementById('panelTag');
+            const submitBtn = document.getElementById('submitBtn');
             
+            // 初始化終端機
+            consoleBox.style.display = 'block';
+            consoleBox.classList.remove('hacked-style');
+            consoleBox.innerHTML = '';
+            submitBtn.disabled = true;
+            submitBtn.innerText = "正在傳輸中...";
+            
+            // 故事日誌序列
             const logSteps = [
-                `[SYSTEM] 啟動量子加密通信鏈接...`,
-                `[CONNECT] 正在向 Pyro 邊境衛星廣播站傳輸數據...`,
-                `[DATA] 飛行員資訊登錄: ID = "${id}"`,
-                `[DATA] 分發意向職位: [${role}]`,
-                `[CHECK] 正在驗證隊徽特權代碼: 69 ...... 認證通過！`,
-                `[SUCCESS] -----------------------------------------`,
-                `[SUCCESS] 拓荒者 ${id}，你的極霸艦隊入隊申請已安全存檔。`,
-                `[NOTICE] 請靜候通訊官透過 Discord 量子頻道與您進行後續對接！`,
-                `[SYSTEM] 終端連線掛斷。SEE YOU IN THE VERSE!`
+                { text: `[SYSTEM] 啟動外部量子通信鏈接...`, delay: 0 },
+                { text: `[CONNECT] 正在向 Pyro 邊境廣播站傳輸數據封包...`, delay: 400 },
+                { text: `[DATA] 讀取申請人: ID = "${id}"`, delay: 800 },
+                { text: `[DATA] 意向部門: [${role}]`, delay: 1200 },
+                { text: `[WARNING] 偵測到未預期的流量分流！通訊抖動異常。`, delay: 1800, isWarn: true },
+                { text: `[ALERT] !! 警告 !! UEE 帝國海軍監控防火牆正在追蹤此網域位置...`, delay: 2400, isAlert: true },
+                { text: `[CRITICAL] 連線遭到外部強制攔截！！！`, delay: 3000, triggerHack: true },
+                { text: `[HACKED] ☠️ 終端全面失控 SYSTEM COMPROMISED ☠️`, delay: 3500 },
+                { text: `[HACKER] "呵呵... 極霸艦隊的終端機挺好玩的嘛。"`, delay: 4200 },
+                { text: `[HACKER] "連線已遭中斷。沒有資料庫可以上傳，但你的靈魂已被駭客標記。"`, delay: 4800 },
+                { text: `[SYSTEM] 警告：通訊鏈結已斷開。錯誤代碼: ERR_CONN_INTERCEPTED_69`, delay: 5500 }
             ];
             
-            let currentStep = 0;
-            
-            function printTerminalLine() {
-                if (currentStep < logSteps.length) {
+            logSteps.forEach((step) => {
+                setTimeout(() => {
                     const line = document.createElement('div');
                     line.className = 'log-line';
-                    line.innerText = logSteps[currentStep];
+                    line.innerText = step.text;
+                    
+                    // 根據進度上色
+                    if (step.isWarn) line.style.color = 'var(--fleet-gold)';
+                    if (step.isAlert) line.style.color = 'orange';
+                    
                     consoleBox.appendChild(line);
-                    currentStep++;
-                    setTimeout(printTerminalLine, 350); // 每行間隔 350ms，增加駭客科技感
-                }
-            }
-            printTerminalLine();
+                    
+                    // 🎬 觸發駭客入侵大動畫！！
+                    if (step.triggerHack) {
+                        // 1. 終端機面板轉為恐怖紅
+                        consoleBox.classList.add('hacked-style');
+                        // 2. 全螢幕紅光閃爍
+                        body.classList.add('emergency-alert');
+                        // 3. 全螢幕劇烈震動
+                        container.classList.add('screen-shake');
+                        // 4. 頂部狀態列變更為「遭到入侵」
+                        statusDot.style.backgroundColor = 'var(--fleet-red)';
+                        statusDot.style.boxShadow = '0 0 12px var(--fleet-red)';
+                        statusText.innerText = "!!! 核心遭侵入 !!!";
+                        statusText.style.color = 'var(--fleet-red)';
+                        panelTag.innerText = "WARNING: HACKED";
+                        panelTag.style.borderColor = 'var(--fleet-red)';
+                        panelTag.style.color = 'var(--fleet-red)';
+                        panelTag.style.background = 'rgba(255,42,42,0.2)';
+                    }
+                    
+                    // 結束時停止震動，保持紅光與中斷狀態
+                    if (step.text.includes("ERR_CONN_INTERCEPTED")) {
+                        container.classList.remove('screen-shake');
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = "重新對接群星";
+                    }
+                    
+                }, step.delay);
+            });
         }
     </script>
 </body>
